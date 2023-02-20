@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class ItemManager {
+    // Item categories
+    public static final int PERISHABLE = 1;
+    public static final int NON_PERISHABLE = 2;
+    
+    public static void main(String[] args) {
+        // Create an array of items
+        Item[] items = new Item[10];
+        
+        // Populate the array with items 
+        items[0] = new PerishableItem("Apples", LocalDate.now().plusDays(2));
+        items[1] = new PerishableItem("Bananas", LocalDate.now().plusDays(4));
+        items[2] = new PerishableItem("Strawberries", LocalDate.now().plusDays(6));
+        items[3] = new PerishableItem("Tomatoes", LocalDate.now().plusDays(8));
+        items[4] = new PerishableItem("Cucumbers", LocalDate.now().plusDays(10));
+        items[5] = new NonPerishableItem("Cereal");
+        items[6] = new NonPerishableItem("Chips");
+        items[7] = new NonPerishableItem("Crackers");
+        items[8] = new NonPerishableItem("Cookies");
+        items[9] = new NonPerishableItem("Candy");
+        
+        // Loop over the items and print them out
+        for (Item item : items) {
+            System.out.println(item);
+        }
+        
+        // Create a sale object to manage the sale of the items
+        Sale sale = new Sale();
+        
+        // Loop over the items and check for expiry
+        for (Item item : items) {
+            // If the item is perishable, check the expiry date
+            if (item.getType() == PERISHABLE) {
+                PerishableItem perishableItem = (PerishableItem) item;
+                // If the item is expired, remove it from the sale
+                if (perishableItem.getExpiryDate().isBefore(LocalDate.now())) 
+                   {
+                    sale.remove(perishableItem);
+                }
+            }
+       
+
